@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Article from '../../layouts/Article.astro';
+
+export const getStaticPaths = (async () => {
+  const notes = await getCollection('field-notes', ({ data }) => !data.draft);
+  return notes.map((note) => ({ params: { id: note.id }, props: { note } }));
+}) satisfies GetStaticPaths;
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+---
+
+<Article
+  title={note.data.title}
+  description={note.data.description}
+  pubDate={note.data.pubDate}
+  updatedDate={note.data.updatedDate}
+  tags={note.data.tags}
+  section="Field Notes"
+  sectionHref="/field-notes"
+>
+  <Content />
+</Article>

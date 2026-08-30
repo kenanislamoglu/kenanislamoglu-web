@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE, SOCIALS } from '../consts';
+
+const posts = (await getCollection('engineering-log', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+
+const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+---
+
+<Base>
+  <h1>{SITE.title}</h1>
+  <p class="lede">
+    Software engineer working on distributed systems, performance and security.
+    I write up the problems that were hard to diagnose and the architectural
+    decisions behind how they were solved.
+  </p>
+
+  <p>
+    {
+      SOCIALS.map((social, index) => (
+        <>
+          {index > 0 && ' · '}
+          <a href={social.href} rel="me noopener">
+            {social.label}
+          </a>
+        </>
+      ))
+    }
+  </p>
+
+  <hr />
+
+  <section>
+    <p class="eyebrow">Engineering Log</p>
+    <p class="entry__summary">
+      Long-form case studies: post-mortems, architecture breakdowns and
+      benchmark data. A handful a year, not a stream.
+    </p>
+    <ul class="entry-list">
+      {
+        posts.map((post) => (
+          <li>
+            <p class="meta">
+              <FormattedDate date={post.data.pubDate} />
+            </p>
+            <h2 class="entry__title">
+              <a href={`/engineering-log/${post.id}`}>{post.data.title}</a>
+            </h2>
+            <p class="entry__summary">{post.data.takeaway ?? post.data.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+    <p><a href="/engineering-log">All entries &rarr;</a></p>
+  </section>
+
+  <hr />
+
+  <section>
+    <p class="eyebrow">Field Notes</p>
+    <p class="entry__summary">
+      Working reference on systems architecture and security — shorter, denser,
+      revised as understanding improves.
+    </p>
+    <ul class="entry-list">
+      {
+        notes.map((note) => (
+          <li>
+            <p class="meta">{note.data.topic}</p>
+            <h2 class="entry__title">
+              <a href={`/field-notes/${note.id}`}>{note.data.title}</a>
+            </h2>
+            <p class="entry__summary">{note.data.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+    <p><a href="/field-notes">All notes &rarr;</a></p>
+  </section>
+</Base>

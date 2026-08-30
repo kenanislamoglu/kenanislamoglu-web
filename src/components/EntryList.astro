@@ -1,0 +1,45 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+interface Entry {
+  href: string;
+  title: string;
+  summary: string;
+  pubDate: Date;
+  tags?: string[];
+}
+
+interface Props {
+  entries: Entry[];
+  emptyMessage?: string;
+}
+
+const { entries, emptyMessage = 'Nothing published yet.' } = Astro.props;
+---
+
+{
+  entries.length === 0 ? (
+    <p class="lede">{emptyMessage}</p>
+  ) : (
+    <ul class="entry-list">
+      {entries.map((entry) => (
+        <li>
+          <p class="meta">
+            <FormattedDate date={entry.pubDate} />
+          </p>
+          <h2 class="entry__title">
+            <a href={entry.href}>{entry.title}</a>
+          </h2>
+          <p class="entry__summary">{entry.summary}</p>
+          {entry.tags && entry.tags.length > 0 && (
+            <ul class="tag-row">
+              {entry.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}

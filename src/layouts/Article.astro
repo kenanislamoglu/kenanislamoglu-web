@@ -1,0 +1,80 @@
+---
+import Base from './Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  /** Shown above the title, e.g. "Engineering Log". */
+  section: string;
+  sectionHref: string;
+}
+
+const { title, description, pubDate, updatedDate, tags = [], section, sectionHref } = Astro.props;
+---
+
+<Base title={title} description={description} type="article" publishedTime={pubDate}>
+  <article>
+    <p class="eyebrow"><a href={sectionHref}>{section}</a></p>
+    <h1>{title}</h1>
+    <p class="meta">
+      <FormattedDate date={pubDate} />
+      {updatedDate && <> · updated <FormattedDate date={updatedDate} /></>}
+    </p>
+    <p class="lede">{description}</p>
+
+    {
+      tags.length > 0 && (
+        <ul class="tag-row">
+          {tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    <hr />
+
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<script>
+  // Mermaid is ~500 kB, so it is only fetched on pages that actually contain a
+  // diagram. Vite code-splits the dynamic import into its own chunk.
+  const blocks = Array.from(document.querySelectorAll<HTMLElement>('pre.mermaid[data-diagram]'));
+
+  if (blocks.length > 0) {
+    const sources = blocks.map((block) => block.textContent ?? '');
+    const { default: mermaid } = await import('mermaid');
+
+    const render = async () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: dark ? 'dark' : 'neutral',
+        fontFamily: 'inherit',
+      });
+
+      for (const [index, block] of blocks.entries()) {
+        try {
+          const { svg } = await mermaid.render(`mermaid-${index}`, sources[index]);
+          block.innerHTML = svg;
+          block.dataset.rendered = 'true';
+        } catch {
+          // Leave the source visible so a broken diagram is still readable.
+          block.textContent = sources[index];
+          block.dataset.rendered = 'true';
+        }
+      }
+    };
+
+    await render();
+    document.addEventListener('themechange', () => void render());
+  }
+</script>
