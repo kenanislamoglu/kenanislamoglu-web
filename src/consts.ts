@@ -9,8 +9,7 @@ export const SITE = {
 
 export const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/kenanislamoglu' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/kenanislamoglu' },
-  { label: 'X', href: 'https://x.com/kenanislamoglu' },
+  { label: 'X', href: 'https://x.com/kenan_islamoglu' },
 ] as const;
 
 export const NAV = [
