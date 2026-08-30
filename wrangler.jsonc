@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "kenanislamoglu-web",
+  "compatibility_date": "2026-08-30",
+
+  // Assets-only Worker: no server code, just the static build output.
+  "assets": {
+    "directory": "./dist",
+    // Astro is configured with trailingSlash: 'never', so serve /foo (not /foo/).
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  // Custom domains are created (with their DNS records) on deploy.
+  // Canonical tags point at the apex, so www is a mirror, not a duplicate.
+  "routes": [
+    { "pattern": "kenanislamoglu.com", "custom_domain": true },
+    { "pattern": "www.kenanislamoglu.com", "custom_domain": true }
+  ]
+}
