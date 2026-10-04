@@ -16,9 +16,9 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
 <Base>
   <h1>{SITE.title}</h1>
   <p class="lede">
-    Software engineer working on distributed systems, performance and security.
-    I write up the problems that were hard to diagnose and the architectural
-    decisions behind how they were solved.
+    Software engineer and team lead in Istanbul, working in C# and .NET since
+    2008. Notes on AI-assisted development and what I learn building with
+    LLMs — written as I go.
   </p>
 
   <p>
@@ -34,6 +34,9 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
     }
   </p>
 
+  {
+    posts.length > 0 && (
+  <>
   <hr />
 
   <section>
@@ -59,7 +62,13 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
     </ul>
     <p><a href="/engineering-log">All entries &rarr;</a></p>
   </section>
+  </>
+    )
+  }
 
+  {
+    notes.length > 0 && (
+  <>
   <hr />
 
   <section>
@@ -83,4 +92,7 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
     </ul>
     <p><a href="/field-notes">All notes &rarr;</a></p>
   </section>
+  </>
+    )
+  }
 </Base>

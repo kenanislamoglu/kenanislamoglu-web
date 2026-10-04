@@ -1,8 +1,8 @@
 export const SITE = {
   title: 'Kenan İslamoğlu',
-  role: 'Software Engineer · Systems & Security',
+  role: 'Software Engineer & Team Lead',
   description:
-    'Architecture breakdowns, post-mortems and field notes on distributed systems, performance and security.',
+    'Notes on AI-assisted development and what I learn building with LLMs, by a C#/.NET engineer and team lead in Istanbul.',
   url: 'https://kenanislamoglu.com',
   locale: 'en',
 } as const;
