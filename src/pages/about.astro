@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SOCIALS } from '../consts';
 
 // One reverse-chronological timeline: work, study and current AI work side by side.
 const timeline = [
@@ -98,18 +97,4 @@ const timeline = [
     </ul>
   </section>
 
-  <hr />
-
-  <p>
-    {
-      SOCIALS.map((social, index) => (
-        <>
-          {index > 0 && ' · '}
-          <a href={social.href} rel="me noopener">
-            {social.label}
-          </a>
-        </>
-      ))
-    }
-  </p>
 </Base>
