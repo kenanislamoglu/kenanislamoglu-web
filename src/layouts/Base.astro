@@ -1,7 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE } from '../consts';
+import { SITE, SOCIALS } from '../consts';
 import { cleanPath } from '../lib/url';
 import '../styles/global.css';
 
@@ -12,6 +12,8 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: Date;
   noindex?: boolean;
+  /** Emit Person structured data (identity only: no employer or contact details). */
+  person?: boolean;
 }
 
 const {
@@ -20,9 +22,18 @@ const {
   type = 'website',
   publishedTime,
   noindex = false,
+  person = false,
 } = Astro.props;
 
 const pageTitle = title ? `${title} — ${SITE.title}` : `${SITE.title} — ${SITE.role}`;
+const personLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.title,
+  url: SITE.url,
+  jobTitle: SITE.role,
+  sameAs: SOCIALS.map((social) => social.href),
+});
 const canonical = new URL(cleanPath(Astro.url), Astro.site ?? SITE.url).href.replace(/\/$/, '');
 ---
 
@@ -47,6 +58,8 @@ const canonical = new URL(cleanPath(Astro.url), Astro.site ?? SITE.url).href.rep
     <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    {person && <script type="application/ld+json" is:inline set:html={personLd} />}
 
     <script is:inline src="/theme.js"></script>
   </head>

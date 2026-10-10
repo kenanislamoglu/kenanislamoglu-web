@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import { SOCIALS } from '../consts';
+
+// One reverse-chronological timeline: work, study and current AI work side by side.
+const timeline = [
+  {
+    when: 'Now',
+    title: 'AI engineering',
+    detail:
+      'Studying AI engineering in depth (retrieval, evaluation, agents), focused on where it meets my security background: testing whether tool-using AI agents can be manipulated into misusing their tools. Write-ups will appear on this site as the work produces results.',
+  },
+  {
+    when: '2026',
+    title: 'AI agents at Tatil Sepeti',
+    detail:
+      'Built AI agents with Claude Code at Tatil Sepeti: a RAG-based knowledge assistant that answers from internal documentation and cites its sources, rule-based monitoring whose results are interpreted by an LLM, and scheduled automations. Also set up an AI-assisted development process in which every change passes analysis, development and independent testing steps.',
+  },
+  {
+    when: '2023–2025',
+    title: 'MSc in Computer Engineering (Cybersecurity)',
+    detail: 'İstanbul Commerce University, completed while leading the team.',
+  },
+  {
+    when: '2021–present',
+    title: 'Software Engineering Team Lead, Tatil Sepeti',
+    detail:
+      'Lead a 10-person team and still write code: backend services and integrations with 15–20 travel suppliers (SOAP/XML and REST), plus the code review and quality gates the team ships through.',
+  },
+  {
+    when: '2021',
+    title: 'Introduction to Machine Learning',
+    detail: 'TOBB University of Economics and Technology (certificate).',
+  },
+  {
+    when: '2020–2021',
+    title: 'Senior Software Engineer, NTT DATA Business Solutions Turkey',
+    detail:
+      'Technical lead on a large enterprise HR platform; real-time notifications and reporting with SignalR on Azure.',
+  },
+  {
+    when: '2017–2020',
+    title: 'Software Development Manager, Pronto Tur',
+    detail:
+      'Ran development and delivery of a flight and hotel booking platform with a 10-person team.',
+  },
+  {
+    when: '2013–2017',
+    title: 'Senior Software Engineer, Pronto Tur',
+    detail:
+      'Brought flight and hotel inventory from different suppliers into one search-and-booking flow; built dynamic flight + hotel packaging on top of it.',
+  },
+  {
+    when: '2008–2013',
+    title: 'Software Developer, İstanbul Metropolitan Municipality, İETT, SAYSİS, Gülaylar Group',
+    detail: 'Enterprise web, desktop and service applications on .NET.',
+  },
+  {
+    when: '2006',
+    title: 'BA in Business Administration',
+    detail: 'Afyon Kocatepe University.',
+  },
+];
+---
+
+<Base
+  title="About"
+  description="C#/.NET engineer and team lead since 2008, now focused on AI engineering and agent security."
+  person
+>
+  <h1>About</h1>
+  <p class="lede">
+    I've been building software with C# and .NET since 2008. Since 2013 most of
+    my work has been in travel booking: systems that bring flight, hotel and
+    car-rental inventory from many suppliers into a single search-and-booking
+    flow. Today I lead a 10-person team at Tatil Sepeti, where I still write
+    code and run the code review and automated quality gates (SonarQube, SAST,
+    OWASP Top 10) the team ships through. Recently I've been building AI agents
+    with Claude Code, including a RAG-based internal knowledge assistant. I hold
+    an MSc in Computer Engineering (Cybersecurity). This site is where I write
+    up what I learn about AI engineering.
+  </p>
+
+  <hr />
+
+  <section>
+    <p class="eyebrow">Timeline</p>
+    <ul class="entry-list">
+      {
+        timeline.map((item) => (
+          <li>
+            <p class="meta">{item.when}</p>
+            <h2 class="entry__title">{item.title}</h2>
+            <p class="entry__summary">{item.detail}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <hr />
+
+  <p>
+    {
+      SOCIALS.map((social, index) => (
+        <>
+          {index > 0 && ' · '}
+          <a href={social.href} rel="me noopener">
+            {social.label}
+          </a>
+        </>
+      ))
+    }
+  </p>
+</Base>

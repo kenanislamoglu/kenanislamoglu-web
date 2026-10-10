@@ -13,12 +13,12 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
   .slice(0, 5);
 ---
 
-<Base>
+<Base person>
   <h1>{SITE.title}</h1>
   <p class="lede">
     Software engineer and team lead in Istanbul, working in C# and .NET since
     2008. Notes on AI-assisted development and what I learn building with
-    LLMs — written as I go.
+    LLMs — written as I go. <a href="/about">More about me &rarr;</a>
   </p>
 
   <p>
