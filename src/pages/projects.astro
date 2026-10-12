@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import { PROJECTS } from '../consts';
+---
+
+<Base
+  title="Projects"
+  description="Apps Kenan İslamoğlu designs, builds and ships end to end on his own."
+>
+  <h1>Projects</h1>
+  <p class="lede">
+    Apps I design, build and ship end to end on my own: product, code,
+    infrastructure and App Store release.
+  </p>
+
+  <ul class="entry-list">
+    {
+      PROJECTS.map((project) => (
+        <li>
+          <p class="meta">
+            {project.platform} · {project.status}
+          </p>
+          <h2 class="entry__title" id={project.short.toLowerCase()}>
+            {project.href ? <a href={project.href}>{project.name}</a> : project.name}
+          </h2>
+          <p class="entry__summary">{project.description}</p>
+          <p class="entry__summary">
+            <strong>Role:</strong> {project.role}
+          </p>
+          <p class="entry__summary">
+            <strong>Stack:</strong> {project.stack.join(' · ')}
+          </p>
+          <p class="entry__summary">{project.note}</p>
+          {project.links.length > 0 && (
+            <p>
+              {project.links.map((link, index) => (
+                <>
+                  {index > 0 && ' · '}
+                  <a href={link.href} rel="noopener">
+                    {link.label}
+                  </a>
+                </>
+              ))}
+            </p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</Base>
