@@ -40,7 +40,7 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
     <p class="eyebrow">Side projects</p>
     <ul>
       {
-        PROJECTS.map((project) => (
+        PROJECTS.filter((project) => project.onHome !== false).map((project) => (
           <li>
             <a href={`/projects#${project.short.toLowerCase()}`}>{project.short}</a>, {project.tagline}
           </li>

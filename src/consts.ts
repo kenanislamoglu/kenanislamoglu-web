@@ -25,6 +25,8 @@ interface Project {
   short: string;
   name: string;
   tagline: string;
+  /** Set to false to keep a project off the home page list. */
+  onHome?: boolean;
   platform: string;
   status: string;
   description: string;
@@ -68,5 +70,25 @@ export const PROJECTS: Project[] = [
     note: 'The app never calls the paid pharmacy-data API directly; a Cloudflare Worker serves it from a KV cache, so data cost stays flat as usage grows.',
     href: 'https://apps.apple.com/app/id6805183165',
     links: [{ label: 'App Store', href: 'https://apps.apple.com/app/id6805183165' }],
+  },
+  {
+    short: 'UNSEEN',
+    name: 'UNSEEN',
+    tagline: 'a multiplayer horror game on Roblox',
+    onHome: false,
+    platform: 'Roblox',
+    status: 'In private testing',
+    description:
+      "A multiplayer horror game where the monster can see you but can't hear you, so hiding means standing in the right corner, not pressing a button. Three maps, each with its own goal: find the keys in a house, find the shifting portal in the Backrooms, carry a phone up five floors of a school to call for help.",
+    stack: [
+      'Roblox',
+      'Luau',
+      'Rojo (code in Git, synced into Studio)',
+      'StyLua',
+      'Node.js script that picks licensed sounds from the Creator Store',
+    ],
+    note: 'Every level is generated from a seed by a pure function. The server builds the map from it, and each player\'s device draws its own minimap from the same function, so no layout data crosses the network and the two can never disagree.',
+    href: 'https://unseen.kenanislamoglu.com',
+    links: [{ label: 'Game page', href: 'https://unseen.kenanislamoglu.com' }],
   },
 ];
