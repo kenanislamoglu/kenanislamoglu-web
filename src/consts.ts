@@ -53,9 +53,9 @@ export const PROJECTS: Project[] = [
       'react-native-audio-api',
       'binaural (HRIR) rendering',
       'motion sensors',
-      'fully offline',
+      'plays fully offline',
     ],
-    note: 'Sound is the whole game, so a suite of automated checks guards the audio engine before any change can ship: every sound fades in and out without a click, and is released once it falls silent.',
+    note: 'Sound is the whole game, so a suite of automated checks guards the audio engine: every sound fades in and out without a click, and is released once it falls silent.',
     links: [],
   },
   {
