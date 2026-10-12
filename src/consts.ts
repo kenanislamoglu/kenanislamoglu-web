@@ -17,7 +17,7 @@ export const NAV = [
   { label: 'Engineering Log', href: '/engineering-log' },
   { label: 'Field Notes', href: '/field-notes' },
   { label: 'About', href: '/about' },
-  { label: 'Projects', href: '/projects' },
+  { label: 'Side projects', href: '/projects' },
 ] as const;
 
 interface Project {
@@ -28,7 +28,6 @@ interface Project {
   platform: string;
   status: string;
   description: string;
-  role: string;
   stack: string[];
   note: string;
   /** Omitted until the project has a public page that resolves. */
@@ -46,7 +45,6 @@ export const PROJECTS: Project[] = [
     status: 'In App Store review, launching October 2026',
     description:
       'A horror game you play with your ears: headphones on, screen off, and you turn the phone toward the sound to find your way.',
-    role: 'Solo, end to end.',
     stack: [
       'React Native (Expo)',
       'TypeScript',
@@ -66,7 +64,6 @@ export const PROJECTS: Project[] = [
     status: 'Live on the App Store',
     description:
       'An ad-free app that shows the on-duty pharmacies near you in Turkey, built for the moment you need one at 2 a.m.',
-    role: 'Solo, end to end.',
     stack: ['React Native (Expo)', 'TypeScript', 'Cloudflare Workers + KV'],
     note: 'The app never calls the paid pharmacy-data API directly; a Cloudflare Worker serves it from a KV cache, so data cost stays flat as usage grows.',
     href: 'https://apps.apple.com/app/id6805183165',

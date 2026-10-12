@@ -37,7 +37,7 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
   <hr />
 
   <section>
-    <p class="eyebrow">Projects</p>
+    <p class="eyebrow">Side projects</p>
     <ul>
       {
         PROJECTS.map((project) => (
@@ -47,7 +47,7 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
         ))
       }
     </ul>
-    <p><a href="/projects">All projects &rarr;</a></p>
+    <p><a href="/projects">All side projects &rarr;</a></p>
   </section>
 
   {

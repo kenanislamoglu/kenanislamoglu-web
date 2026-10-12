@@ -4,13 +4,14 @@ import { PROJECTS } from '../consts';
 ---
 
 <Base
-  title="Projects"
-  description="Apps Kenan İslamoğlu designs, builds and ships end to end on his own."
+  title="Side projects"
+  description="Small apps Kenan İslamoğlu builds in his spare time: an audio-only horror game and an on-duty pharmacy finder."
 >
-  <h1>Projects</h1>
+  <h1>Side projects</h1>
   <p class="lede">
-    Apps I design, build and ship end to end on my own: product, code,
-    infrastructure and App Store release.
+    Small apps I build in my spare time, for the fun of it and to try ideas I
+    don't get to use at work. My day job is backend engineering and leading a
+    team; that story is on the <a href="/about">About page</a>.
   </p>
 
   <ul class="entry-list">
@@ -24,9 +25,6 @@ import { PROJECTS } from '../consts';
             {project.href ? <a href={project.href}>{project.name}</a> : project.name}
           </h2>
           <p class="entry__summary">{project.description}</p>
-          <p class="entry__summary">
-            <strong>Role:</strong> {project.role}
-          </p>
           <p class="entry__summary">
             <strong>Stack:</strong> {project.stack.join(' · ')}
           </p>
