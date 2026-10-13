@@ -16,9 +16,17 @@ const timeline = [
       'Built AI agents with Claude Code at Tatil Sepeti: a RAG-based knowledge assistant that answers from internal documentation and cites its sources, rule-based monitoring whose results are interpreted by an LLM, and scheduled automations. Also set up an AI-assisted development process in which every change passes analysis, development and independent testing steps.',
   },
   {
+    when: '2026',
+    title: 'Journal article: A Layered Vulnerability Detection Model for E-Commerce Platforms: Design and Evaluation',
+    detail:
+      'With Fatma Nur Akı. İstanbul Commerce University Journal of Technology and Applied Sciences, 8(2), 105–118 (peer-reviewed). Builds on my MSc thesis.',
+    link: { href: 'https://doi.org/10.56809/icujtas.1755050', label: 'doi:10.56809/icujtas.1755050' },
+  },
+  {
     when: '2023–2025',
-    title: 'MSc in Computer Engineering (Cybersecurity)',
-    detail: 'İstanbul Commerce University, completed while leading the team.',
+    title: 'MSc in Computer Engineering (Cybersecurity), thesis-based',
+    detail:
+      'İstanbul Commerce University, completed while leading the team. Thesis: “Security Vulnerability Detection and Reporting Model in E-Commerce Sites”, advised by Asst. Prof. Fatma Nur Akı. A five-stage process (target definition, information gathering, vulnerability scanning with OWASP ZAP, Burp Suite, Nikto and Nmap, manual verification to remove false positives, and reporting with CVSS v3.1 scores in separate technical and executive reports), validated on a nopCommerce store in an isolated lab.',
   },
   {
     when: '2021–present',
@@ -82,7 +90,7 @@ const timeline = [
     code and run the code review and automated quality gates (SonarQube, SAST,
     OWASP Top 10) the team ships through. Recently I've been building AI agents
     with Claude Code, including a RAG-based internal knowledge assistant. I hold
-    an MSc in Computer Engineering (Cybersecurity). This site is where I write
+    a thesis-based MSc in Computer Engineering (Cybersecurity). This site is where I write
     up what I learn about AI engineering.
   </p>
 
@@ -97,6 +105,11 @@ const timeline = [
             <p class="meta">{item.when}</p>
             <h2 class="entry__title">{item.title}</h2>
             <p class="entry__summary">{item.detail}</p>
+            {item.link && (
+              <p class="entry__summary">
+                <a href={item.link.href}>{item.link.label}</a>
+              </p>
+            )}
           </li>
         ))
       }
