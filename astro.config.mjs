@@ -3,12 +3,34 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
 import { mermaidPlugin } from './src/lib/mermaid-plugin.mjs';
+import { readdirSync, readFileSync } from 'node:fs';
+
+// A section with no published entry is noindex (see its index page), so it
+// stays out of the sitemap too. Files starting with "_" are templates.
+/** @param {string} dir */
+const isEmptySection = (dir) =>
+  !readdirSync(new URL(`./src/content/${dir}/`, import.meta.url), {
+    recursive: true,
+    encoding: 'utf8',
+  }).some(
+    (file) =>
+      /\.md$/.test(file) &&
+      !/(^|[\\/])_/.test(file) &&
+      !/^draft:\s*true\s*$/m.test(
+        readFileSync(new URL(`./src/content/${dir}/${file}`, import.meta.url), 'utf8'),
+      ),
+  );
+const emptySections = ['engineering-log', 'field-notes'].filter(isEmptySection);
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kenanislamoglu.com',
   trailingSlash: 'never',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !emptySections.some((dir) => page === `https://kenanislamoglu.com/${dir}`),
+    }),
+  ],
   build: {
     format: 'file',
   },

@@ -1,10 +1,14 @@
 export const SITE = {
   title: 'Kenan İslamoğlu',
+  /** Same name without Turkish letters, as people often type it into search. */
+  titleAscii: 'Kenan Islamoglu',
   role: 'Software Engineer & Team Lead',
   description:
     'Notes on AI-assisted development and what I learn building with LLMs, by a C#/.NET engineer and team lead in Istanbul.',
   url: 'https://kenanislamoglu.com',
   locale: 'en',
+  /** 1200x630 share card, used when a page has no image of its own. */
+  ogImage: '/og.png',
 } as const;
 
 export const SOCIALS = [

@@ -14,6 +14,10 @@ interface Props {
   noindex?: boolean;
   /** Emit Person structured data (identity only: no employer or contact details). */
   person?: boolean;
+  /** Mark the page as a profile page whose main entity is the Person (used on /about). */
+  profilePage?: boolean;
+  /** Extra schema.org nodes for this page (e.g. BlogPosting); joined into one @graph. */
+  schema?: Record<string, unknown>[];
 }
 
 const {
@@ -23,18 +27,55 @@ const {
   publishedTime,
   noindex = false,
   person = false,
+  profilePage = false,
+  schema = [],
 } = Astro.props;
 
 const pageTitle = title ? `${title} — ${SITE.title}` : `${SITE.title} — ${SITE.role}`;
-const personLd = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: SITE.title,
-  url: SITE.url,
-  jobTitle: SITE.role,
-  sameAs: SOCIALS.map((social) => social.href),
-});
 const canonical = new URL(cleanPath(Astro.url), Astro.site ?? SITE.url).href.replace(/\/$/, '');
+const isHome = cleanPath(Astro.url) === '/';
+
+// One stable @id so every page, post and profile points at the same person.
+const PERSON_ID = `${SITE.url}/#person`;
+const WEBSITE_ID = `${SITE.url}/#website`;
+const graph: Record<string, unknown>[] = [];
+if (person || profilePage) {
+  graph.push({
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: SITE.title,
+    alternateName: SITE.titleAscii,
+    url: SITE.url,
+    jobTitle: SITE.role,
+    sameAs: SOCIALS.map((social) => social.href),
+  });
+}
+if (isHome) {
+  graph.push({
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    name: SITE.title,
+    url: SITE.url,
+    inLanguage: SITE.locale,
+    author: { '@id': PERSON_ID },
+  });
+}
+if (profilePage) {
+  graph.push({
+    '@type': 'ProfilePage',
+    '@id': `${canonical}#profile`,
+    url: canonical,
+    name: pageTitle,
+    inLanguage: SITE.locale,
+    isPartOf: { '@id': WEBSITE_ID },
+    mainEntity: { '@id': PERSON_ID },
+  });
+}
+graph.push(...schema);
+const jsonLd =
+  graph.length > 0 ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }) : null;
+
+const ogImage = new URL(SITE.ogImage, SITE.url).href;
 ---
 
 <!doctype html>
@@ -48,18 +89,25 @@ const canonical = new URL(cleanPath(Astro.url), Astro.site ?? SITE.url).href.rep
     {noindex && <meta name="robots" content="noindex" />}
 
     <meta property="og:type" content={type} />
-    <meta property="og:title" content={title ?? SITE.title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${SITE.title}, ${SITE.role}`} />
     {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="author" content={SITE.title} />
 
     <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-    {person && <script type="application/ld+json" is:inline set:html={personLd} />}
+    {jsonLd && <script type="application/ld+json" is:inline set:html={jsonLd} />}
 
     <script is:inline src="/theme.js"></script>
   </head>

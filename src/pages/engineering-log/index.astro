@@ -12,9 +12,11 @@ const entries = (await getCollection('engineering-log', ({ data }) => !data.draf
     pubDate: post.data.pubDate,
     tags: post.data.tags,
   }));
+// Keep the empty section out of search results until its first entry ships.
 ---
 
 <Base
+  noindex={entries.length === 0}
   title="Engineering Log"
   description="Post-mortems, architecture breakdowns and benchmark-backed case studies."
 >

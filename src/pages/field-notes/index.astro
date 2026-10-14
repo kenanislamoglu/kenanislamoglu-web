@@ -7,9 +7,11 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft)).so
 );
 
 const topics = [...new Set(notes.map((note) => note.data.topic))].sort();
+// Keep the empty section out of search results until its first entry ships.
 ---
 
 <Base
+  noindex={notes.length === 0}
   title="Field Notes"
   description="Working reference notes on distributed systems, cryptography and security architecture."
 >

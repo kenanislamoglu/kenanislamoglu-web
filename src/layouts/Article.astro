@@ -1,6 +1,7 @@
 ---
 import Base from './Base.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { SITE } from '../consts';
 
 interface Props {
   title: string;
@@ -14,9 +15,27 @@ interface Props {
 }
 
 const { title, description, pubDate, updatedDate, tags = [], section, sectionHref } = Astro.props;
+
+const postLd = {
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  inLanguage: SITE.locale,
+  author: { '@id': `${SITE.url}/#person` },
+  ...(tags.length > 0 && { keywords: tags.join(', ') }),
+};
 ---
 
-<Base title={title} description={description} type="article" publishedTime={pubDate}>
+<Base
+  title={title}
+  description={description}
+  type="article"
+  publishedTime={pubDate}
+  person
+  schema={[postLd]}
+>
   <article>
     <p class="eyebrow"><a href={sectionHref}>{section}</a></p>
     <h1>{title}</h1>
