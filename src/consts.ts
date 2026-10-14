@@ -40,6 +40,26 @@ interface Project {
 // Every claim here must hold up against the project's repo.
 export const PROJECTS: Project[] = [
   {
+    short: 'Lintel',
+    name: 'Lintel',
+    tagline: 'a multi-agent personal AI system with one shared memory',
+    onHome: false,
+    platform: 'Personal AI system',
+    status: 'In daily use since August 2026',
+    description:
+      "Twelve specialist AI agents run a household's paperwork, plans and projects. They share one written memory, so every session, on any device, starts where the last one stopped. People in the house reach it over Telegram, each routed to their own entry point.",
+    stack: [
+      'Claude Code (sub-agents, session hooks)',
+      'Markdown + git as memory',
+      'Python',
+      'Playwright',
+      'Telegram Bot API',
+    ],
+    note: 'An independent QA agent checks every "done" claim and accepts a fix only with a test that fails without it. In its first 12 days about 4 in 10 claims came back FAIL.',
+    href: 'https://lintel.kenanislamoglu.com',
+    links: [{ label: 'Project page', href: 'https://lintel.kenanislamoglu.com' }],
+  },
+  {
     short: 'EARSHOT',
     name: 'EARSHOT: Audio Horror',
     tagline: 'an audio-only horror game for iPhone',
