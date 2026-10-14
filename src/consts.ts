@@ -43,7 +43,6 @@ export const PROJECTS: Project[] = [
     short: 'Lintel',
     name: 'Lintel',
     tagline: 'a multi-agent personal AI system with one shared memory',
-    onHome: false,
     platform: 'Personal AI system',
     status: 'In daily use since August 2026',
     description:
