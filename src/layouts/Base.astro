@@ -73,7 +73,9 @@ if (profilePage) {
 }
 graph.push(...schema);
 const jsonLd =
-  graph.length > 0 ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }) : null;
+  graph.length > 0
+    ? JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')
+    : null;
 
 const ogImage = new URL(SITE.ogImage, SITE.url).href;
 ---
