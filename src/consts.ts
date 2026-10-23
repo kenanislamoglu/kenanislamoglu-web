@@ -112,7 +112,7 @@ export const PROJECTS: Project[] = [
       'PWA with a service worker and web push',
       'JWT auth with refresh tokens',
     ],
-    note: 'The whole backend is serverless: each tenant is a Cosmos DB partition, so isolation is enforced in the data layer, not only in code, and 21 timer functions run reminders, recurring tasks and automations. Retuning those timers and telemetry sampling cut daily invocations from 3,728 to 1,184 (-68%), which keeps the monthly bill in single-digit dollars.',
+    note: 'The whole backend is serverless, with data partitioned by tenant in Cosmos DB and 21 timer functions handling reminders, recurring tasks, automations, analytics and billing. Moving the most frequent timers to longer intervals cut daily invocations from 3,728 to 1,184 (-68%); telemetry sampling keeps logging costs down too.',
     href: 'https://app.checklee.com',
     links: [{ label: 'Live app', href: 'https://app.checklee.com' }],
   },
