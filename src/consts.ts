@@ -98,7 +98,6 @@ export const PROJECTS: Project[] = [
     short: 'Checklee',
     name: 'Checklee',
     tagline: 'a multi-tenant SaaS for field teams',
-    onHome: false,
     platform: 'Web (SaaS, installable PWA)',
     status: 'Live, in maintenance mode',
     description:
