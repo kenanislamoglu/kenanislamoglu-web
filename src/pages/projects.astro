@@ -5,13 +5,13 @@ import { PROJECTS } from '../consts';
 
 <Base
   title="Side projects"
-  description="Small apps Kenan İslamoğlu builds in his spare time: Lintel, a multi-agent personal AI system; EARSHOT, an audio-only horror game; Ease, an on-duty pharmacy finder; Checklee, a multi-tenant SaaS for field teams; and UNSEEN, a multiplayer game on Roblox."
+  description="Systems Kenan İslamoğlu designs and builds end to end in his spare time: Lintel, a multi-agent personal AI system; Checklee, a multi-tenant SaaS for field teams; Ease, an on-duty pharmacy finder; EARSHOT, an audio-only horror game; and UNSEEN, a multiplayer game on Roblox."
 >
   <h1>Side projects</h1>
   <p class="lede">
-    Small apps I build in my spare time, for the fun of it and to try ideas I
-    don't get to use at work. My day job is backend engineering and leading a
-    team; that story is on the <a href="/about">About page</a>.
+    Systems I design and build end to end in my spare time. Each one has its
+    own page with the architecture and the trade-offs. My day job is backend
+    engineering and leading a team; that story is on the <a href="/about">About page</a>.
   </p>
 
   <ul class="entry-list">
@@ -24,16 +24,22 @@ import { PROJECTS } from '../consts';
           <h2 class="entry__title" id={project.short.toLowerCase()}>
             {project.href ? <a href={project.href}>{project.name}</a> : project.name}
           </h2>
-          <p class="entry__summary">{project.description}</p>
-          <p class="entry__summary">
-            <strong>Stack:</strong> {project.stack.join(' · ')}
-          </p>
+          <p class="entry__summary">{project.tagline}</p>
+          <p class="entry__summary metric">{project.metric}</p>
           <p class="entry__summary">{project.note}</p>
-          {project.links.length > 0 && (
+          <details class="more">
+            <summary>What it does and the stack</summary>
+            <p class="entry__summary">{project.description}</p>
+            <p class="entry__summary">
+              <strong>Stack:</strong> {project.stack.join(' · ')}
+            </p>
+          </details>
+          {(project.howHref || project.links.length > 0) && (
             <p>
-              {project.links.map((link, index) => (
+              {project.howHref && <a href={project.howHref}>How it's built &rarr;</a>}
+              {project.links.filter((link) => link.href !== project.howHref).map((link, index) => (
                 <>
-                  {index > 0 && ' · '}
+                  {(project.howHref || index > 0) && ' · '}
                   <a href={link.href} rel="noopener">
                     {link.label}
                   </a>

@@ -7,13 +7,13 @@ const timeline = [
     when: 'Now',
     title: 'AI engineering',
     detail:
-      'Studying AI engineering in depth (retrieval, evaluation, agents), focused on where it meets my security background: testing whether tool-using AI agents can be manipulated into misusing their tools. Write-ups will appear on this site as the work produces results.',
+      'Building AI systems with verification built in. Lintel, my twelve-agent personal system, accepts a fix only with a test that fails without it. Write-ups go to the Engineering Log.',
   },
   {
     when: '2026',
     title: 'AI agents at Tatil Sepeti',
     detail:
-      'Built AI agents with Claude Code at Tatil Sepeti: a RAG-based knowledge assistant that answers from internal documentation and cites its sources, rule-based monitoring whose results are interpreted by an LLM, and scheduled automations. Also set up an AI-assisted development process in which every change passes analysis, development and independent testing steps.',
+      'Built AI agents with Claude Code at Tatil Sepeti: a RAG-based knowledge assistant that answers from internal documentation and cites its sources, rule-based monitoring, and scheduled automations. Also set up an AI-assisted development process in which every change passes analysis, development and independent testing steps.',
   },
   {
     when: '2026',
@@ -35,39 +35,46 @@ const timeline = [
       'Lead a 10-person team and still write code: backend services and integrations with 15–20 travel suppliers (SOAP/XML and REST), plus the code review and quality gates the team ships through.',
   },
   {
+    earlier: true,
     when: '2021',
     title: 'Introduction to Machine Learning',
     detail: 'TOBB University of Economics and Technology (certificate).',
   },
   {
+    earlier: true,
     when: '2020–2021',
     title: 'Senior Software Engineer, NTT DATA Business Solutions Turkey',
     detail:
       'Technical lead on a large enterprise HR platform; real-time notifications and reporting with SignalR on Azure.',
   },
   {
+    earlier: true,
     when: '2017–2020',
     title: 'Software Development Manager, Pronto Tur',
     detail:
       'Ran development and delivery of a flight and hotel booking platform with a 10-person team.',
   },
   {
+    earlier: true,
     when: '2013–2017',
     title: 'Senior Software Engineer, Pronto Tur',
     detail:
       'Brought flight and hotel inventory from different suppliers into one search-and-booking flow; built dynamic flight + hotel packaging on top of it.',
   },
   {
+    earlier: true,
     when: '2008–2013',
     title: 'Software Developer, İstanbul Metropolitan Municipality, İETT, SAYSİS, Gülaylar Group',
     detail: 'Enterprise web, desktop and service applications on .NET.',
   },
   {
+    earlier: true,
     when: '2006',
     title: 'BA in Business Administration',
     detail: 'Afyon Kocatepe University.',
   },
   {
+    earlier: true,
     when: '2004–2006',
     title: 'First product, sold on CD',
     detail:
@@ -83,16 +90,19 @@ const timeline = [
 >
   <h1>About</h1>
   <p class="lede">
-    I've been building software with C# and .NET since 2008. Since 2013 most of
-    my work has been in travel booking: systems that bring flight, hotel and
-    car-rental inventory from many suppliers into a single search-and-booking
-    flow. Today I lead a 10-person team at Tatil Sepeti, where I still write
-    code and run the code review and automated quality gates (SonarQube, SAST,
-    OWASP Top 10) the team ships through. Recently I've been building AI agents
-    with Claude Code, including a RAG-based internal knowledge assistant. I hold
-    a thesis-based MSc in Computer Engineering (Cybersecurity). This site is where I write
-    up what I learn about AI engineering.
+    I've built software in C# and .NET since 2008, most of it in travel booking:
+    one search-and-booking flow over many flight, hotel and car-rental suppliers.
+    I lead a 10-person team and still write code, review and quality gates
+    included. I hold a thesis-based MSc in Cybersecurity. Lately I build AI
+    agents, and I make them prove their work.
   </p>
+
+  <ul class="stats" aria-label="At a glance">
+    <li><b>2008</b><span>building with C# and .NET</span></li>
+    <li><b>10</b><span>person team, lead since 2021</span></li>
+    <li><b>15–20</b><span>travel-supplier integrations</span></li>
+    <li><b>MSc</b><span>Cybersecurity, plus a peer-reviewed article</span></li>
+  </ul>
 
   <hr />
 
@@ -100,7 +110,7 @@ const timeline = [
     <p class="eyebrow">Timeline</p>
     <ul class="entry-list">
       {
-        timeline.map((item) => (
+        timeline.filter((item) => !item.earlier).map((item) => (
           <li>
             <p class="meta">{item.when}</p>
             <h2 class="entry__title">{item.title}</h2>
@@ -114,6 +124,25 @@ const timeline = [
         ))
       }
     </ul>
+    <details class="more">
+      <summary>Earlier, 2004–2021: team lead and senior roles in travel booking, enterprise .NET, the first product</summary>
+      <ul class="entry-list">
+        {
+          timeline.filter((item) => item.earlier).map((item) => (
+          <li>
+            <p class="meta">{item.when}</p>
+            <h2 class="entry__title">{item.title}</h2>
+            <p class="entry__summary">{item.detail}</p>
+            {item.link && (
+              <p class="entry__summary">
+                <a href={item.link.href}>{item.link.label}</a>
+              </p>
+            )}
+          </li>
+          ))
+        }
+      </ul>
+    </details>
   </section>
 
 </Base>

@@ -11,15 +11,31 @@ const posts = (await getCollection('engineering-log', ({ data }) => !data.draft)
 const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 5);
+
+const stats = [
+  { value: '2008', label: 'writing C# and .NET in production' },
+  { value: '10', label: 'engineers I lead, since 2021' },
+  { value: '15–20', label: 'travel-supplier integrations I build and maintain' },
+  { value: '540+', label: 'serverless functions in a multi-tenant SaaS I designed and wrote' },
+  { value: '12', label: 'AI agents on one shared memory, behind an independent test gate' },
+  { value: 'MSc', label: 'Cybersecurity, thesis-based, plus a peer-reviewed article' },
+];
 ---
 
 <Base person>
   <h1>{SITE.title}</h1>
-  <p class="lede">
-    Software engineer and team lead in Istanbul, working in C# and .NET since
-    2008. Notes on AI-assisted development and what I learn building with
-    LLMs — written as I go. <a href="/about">More about me &rarr;</a>
+  <p class="lede">I build complete systems end to end, and I make AI prove its work.</p>
+  <p>
+    Software engineer and team lead in Istanbul. C# and .NET since 2008; leading
+    a 10-person team since 2021. Outside work: a multi-tenant SaaS, iOS apps and
+    a twelve-agent AI system. <a href="/about">More about me &rarr;</a>
   </p>
+
+  <ul class="stats" aria-label="At a glance">
+    {stats.map((stat) => (
+      <li><b>{stat.value}</b><span>{stat.label}</span></li>
+    ))}
+  </ul>
 
   <p>
     {
@@ -37,12 +53,41 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
   <hr />
 
   <section>
+    <p class="eyebrow">How I build</p>
+    <ul class="principles">
+      <li>
+        <strong>Cost first.</strong> Ease never calls its paid data API from a
+        user request; a scheduled job fills a cache, so the bill stays flat
+        however busy the night.
+        <a href="https://eczane.kenanislamoglu.com/how-it-works">How it's built &rarr;</a>
+      </li>
+      <li>
+        <strong>Isolation by construction.</strong> In Checklee the tenant comes
+        from the token, never from the request body, and it is the partition key
+        for most reads and writes.
+        <a href="https://checklee.kenanislamoglu.com/#architecture">Architecture &rarr;</a>
+      </li>
+      <li>
+        <strong>No "done" without proof.</strong> Lintel's QA agent accepts a fix
+        only with a test that fails without it. In its first 12 days, about 4 in
+        10 claims came back FAIL.
+        <a href="https://lintel.kenanislamoglu.com/#architecture">Architecture &rarr;</a>
+      </li>
+    </ul>
+  </section>
+
+  <hr />
+
+  <section>
     <p class="eyebrow">Side projects</p>
-    <ul>
+    <ul class="cards">
       {
         PROJECTS.filter((project) => project.onHome !== false).map((project) => (
           <li>
-            <a href={`/projects#${project.short.toLowerCase()}`}>{project.short}</a>, {project.tagline}
+            <h3><a href={project.href ?? `/projects#${project.short.toLowerCase()}`}>{project.short}</a></h3>
+            <p>{project.tagline}</p>
+            <p class="metric">{project.metric}</p>
+            <p class="meta">{project.status}</p>
           </li>
         ))
       }
