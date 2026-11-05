@@ -12,6 +12,10 @@ const notes = (await getCollection('field-notes', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 5);
 
+const groups = [...new Set(PROJECTS.flatMap((project) => (project.group ? [project.group] : [])))].map(
+  (group) => ({ group, members: PROJECTS.filter((project) => project.group === group) }),
+);
+
 const stats = [
   { value: '2008', label: 'writing C# and .NET in production' },
   { value: '10', label: 'person team I lead, since 2021' },
@@ -92,6 +96,19 @@ const stats = [
         ))
       }
     </ul>
+    {
+      groups.map(({ group, members }) => (
+        <p>
+          {members.map((project, index) => (
+            <>
+              {index > 0 && ' · '}
+              <a href={`/projects#${project.short.toLowerCase()}`}>{project.short}</a>
+            </>
+          ))}
+          {' '}— {group}
+        </p>
+      ))
+    }
     <p><a href="/projects">All side projects &rarr;</a></p>
   </section>
 

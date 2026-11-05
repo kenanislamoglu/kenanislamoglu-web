@@ -31,6 +31,8 @@ interface Project {
   tagline: string;
   /** Set to false to keep a project off the home page list. */
   onHome?: boolean;
+  /** Projects sharing a group appear as one combined line on the home page. */
+  group?: string;
   platform: string;
   status: string;
   description: string;
@@ -117,7 +119,7 @@ export const PROJECTS: Project[] = [
     name: 'EARSHOT: Audio Horror',
     tagline: 'an audio-only horror game for iPhone',
     platform: 'iOS',
-    status: 'In App Store review',
+    status: 'Coming to the App Store',
     description:
       'A horror game you play with your ears: headphones on, screen off, and you turn the phone toward the sound to find your way.',
     stack: [
@@ -133,6 +135,54 @@ export const PROJECTS: Project[] = [
     note: 'Sound is the whole game, so a suite of automated checks guards the audio engine: every sound fades in and out without a click, and is released once it falls silent.',
     href: 'https://earshot.kenanislamoglu.com',
     links: [{ label: 'Game page', href: 'https://earshot.kenanislamoglu.com' }],
+  },
+  {
+    short: 'Redline',
+    name: 'Redline: Text Diff & Restore for Jira',
+    tagline: 'word-level diffs and restore for Jira descriptions',
+    onHome: false,
+    group: 'Atlassian Cloud apps for Jira and Confluence',
+    platform: 'Jira Cloud (Atlassian Forge)',
+    status: 'Submitted to the Atlassian Marketplace',
+    description:
+      "Jira's history shows the whole old text and the whole new text, not what changed. Redline adds a Text history tab to every issue: a word-level diff of the Description and paragraph fields, any two versions side by side, and a one-click restore that keeps the formatting.",
+    stack: ['Atlassian Forge (UI Kit)', 'TypeScript', 'Jira REST API (changelog, v2 wiki renderer)', 'Vitest (responses recorded from a real site)'],
+    metric: '27 of 27 live checks pass on a real Jira site',
+    note: "Jira stores text history as wiki markup, so a restore goes back through REST API v2 and Jira's own renderer turns it into rich text again; tables, lists and code blocks come back as they were. It runs as the current user, so Jira's own Edit permission applies, and it stores nothing.",
+    href: 'https://redline.kenanislamoglu.com',
+    links: [{ label: 'Project page', href: 'https://redline.kenanislamoglu.com' }],
+  },
+  {
+    short: 'Prune',
+    name: 'Prune: Version & Trash Cleanup for Confluence',
+    tagline: 'rule-based cleanup of old page versions and trash',
+    onHome: false,
+    group: 'Atlassian Cloud apps for Jira and Confluence',
+    platform: 'Confluence Cloud (Atlassian Forge)',
+    status: 'Submitted to the Atlassian Marketplace',
+    description:
+      'Keeps the last N versions of every page and blog post, deletes versions older than D days, and empties old trash on a daily schedule. A dry run comes first, deleting needs a typed confirmation, and every run leaves a CSV report.',
+    stack: ['Atlassian Forge (UI Kit, async events queue, scheduled triggers)', 'TypeScript', 'Confluence REST API', 'Vitest (responses recorded from a real site)'],
+    metric: '62 of 62 tests pass',
+    note: 'Confluence renumbers the remaining versions after every delete, so the job reads the list again before each single delete instead of working out numbers up front; a test fails if it ever does. Long jobs run in time-boxed slices and pick up again after a timeout or a rate limit.',
+    href: 'https://prune.kenanislamoglu.com',
+    links: [{ label: 'Project page', href: 'https://prune.kenanislamoglu.com' }],
+  },
+  {
+    short: 'Vacancy',
+    name: 'Vacancy: Personal Space Cleanup for Confluence',
+    tagline: 'finds and archives abandoned personal spaces',
+    onHome: false,
+    group: 'Atlassian Cloud apps for Jira and Confluence',
+    platform: 'Confluence Cloud (Atlassian Forge)',
+    status: 'Submitted to the Atlassian Marketplace',
+    description:
+      "Lists every personal space with its owner's status and three flags: untouched, owner left, dormant. Admins archive them in bulk after a dry run or with a daily rule, and any run can be undone.",
+    stack: ['Atlassian Forge (UI Kit, async events queue, scheduled triggers)', 'TypeScript', 'Confluence REST API', 'Vitest'],
+    metric: '0 spaces deleted: it only archives, and every run can be undone',
+    note: 'Deleting a space was not proven safe for an app, so Vacancy only archives. Each space is read again right before it changes, only personal spaces are ever touched, and a test fails if the "untouched" rule is loosened.',
+    href: 'https://vacancy.kenanislamoglu.com',
+    links: [{ label: 'Project page', href: 'https://vacancy.kenanislamoglu.com' }],
   },
   {
     short: 'UNSEEN',
