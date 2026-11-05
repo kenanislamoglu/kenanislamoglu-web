@@ -137,6 +137,30 @@ export const PROJECTS: Project[] = [
     links: [{ label: 'Game page', href: 'https://earshot.kenanislamoglu.com' }],
   },
   {
+    short: 'Snipsy',
+    name: 'Snipsy',
+    tagline: 'a batch green-screen remover for iPhone and iPad',
+    onHome: false,
+    platform: 'iOS and iPadOS',
+    status: 'Live on the App Store',
+    description:
+      'Removes flat-colour backgrounds and the frame around them from a whole batch of pictures in one tap, and saves each one as a full-resolution transparent PNG. Images are processed on the device; there is no account, no ads and no analytics.',
+    stack: [
+      'React Native (Expo)',
+      'TypeScript image core with no native module',
+      '@shopify/react-native-skia (decode and PNG encode)',
+      'StoreKit 2 via expo-iap, no server',
+      'node:test + pngjs (golden tests on sample images)',
+    ],
+    metric: '27 of 27 tests pass',
+    note: 'Keying one colour across the whole picture would also erase the dark outlines inside each character, so the core peels the background in layers instead: it flood-fills inward from the edge, first the outer frame, then the colour behind it, and clears enclosed gaps only at a much tighter threshold. Tests fail if outline pixels lose opacity, if green clothing is removed or if a green halo is left on the edges.',
+    href: 'https://snipsy.kenanislamoglu.com',
+    links: [
+      { label: 'Project page', href: 'https://snipsy.kenanislamoglu.com' },
+      { label: 'App Store', href: 'https://apps.apple.com/us/app/snipsy/id6824310637' },
+    ],
+  },
+  {
     short: 'Redline',
     name: 'Redline: Text Diff & Restore for Jira',
     tagline: 'word-level diffs and restore for Jira descriptions',
