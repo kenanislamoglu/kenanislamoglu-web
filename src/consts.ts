@@ -119,7 +119,7 @@ export const PROJECTS: Project[] = [
     name: 'EARSHOT: Audio Horror',
     tagline: 'an audio-only horror game for iPhone',
     platform: 'iOS',
-    status: 'Coming to the App Store',
+    status: 'Live on the App Store',
     description:
       'A horror game you play with your ears: headphones on, screen off, and you turn the phone toward the sound to find your way.',
     stack: [
@@ -134,7 +134,10 @@ export const PROJECTS: Project[] = [
     howHref: 'https://earshot.kenanislamoglu.com/how-it-works',
     note: 'Sound is the whole game, so a suite of automated checks guards the audio engine: every sound fades in and out without a click, and is released once it falls silent.',
     href: 'https://earshot.kenanislamoglu.com',
-    links: [{ label: 'Game page', href: 'https://earshot.kenanislamoglu.com' }],
+    links: [
+      { label: 'Game page', href: 'https://earshot.kenanislamoglu.com' },
+      { label: 'App Store', href: 'https://apps.apple.com/app/id6808607033' },
+    ],
   },
   {
     short: 'Snipsy',
